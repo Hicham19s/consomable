@@ -9,17 +9,26 @@ use Session;
 
 class UtilisateurController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('psession');
+        $this->middleware('DGSI_Session');
+    }
     public function index(Request $request)
     {   
         //dd($request->session());
-            $Utilisateurs = Utilisateur::get();
-            $Utilisateurs = Utilisateur::paginate(5);
-            return view('utilisateur.ListeUtilisateurs');
+            $nbrutilisateurs = Utilisateur::count();
+            $nbrutilisateursactifs = Utilisateur::where('activation',true)->count();
+            $nbrutilisateursdesactifs = $nbrutilisateurs-$nbrutilisateursactifs;
+
+            $nbrutilisateursactifs = round(($nbrutilisateursactifs*100)/$nbrutilisateurs,1) . ' %';
+            $nbrutilisateursdesactifs = round(($nbrutilisateursdesactifs*100)/$nbrutilisateurs,1) . ' %';
+
+            $TypeServices = Utilisateur::enumutilisateur();
+            return view('utilisateur.ListeUtilisateurs',['TypeServices'=>$TypeServices,
+            'nbrutilisateurs'=>$nbrutilisateurs,
+            'nbrutilisateursactifs'=>$nbrutilisateursactifs,
+            'nbrutilisateursdesactifs'=>$nbrutilisateursdesactifs]);
         
     }
 
@@ -43,7 +52,7 @@ class UtilisateurController extends Controller
     public function store(Request $request)
     {   
         //$this->validate($request , ['pseudo'=>'required|max:20',]);
-        //dd('rrrrrrrrrr');      
+        //dd($request);      
         $request->validate([
         'pseudo' => 'bail|required|unique:utilisateurs',
         'nom' => 'bail|required|string|max:20|alpha',
@@ -64,6 +73,7 @@ class UtilisateurController extends Controller
                             'nomservice' => $request['nomservice'],
                             'password' => $request['password'],]);
         return redirect()->route('utilisateurs')->withSuccess('Utilisateur créé avec succés');
+       // Return redirect::back()->route('utilisateurs')->withSuccess('Utilisateur créé avec succés');
     }
 
     /**
@@ -87,7 +97,6 @@ class UtilisateurController extends Controller
     {
         $TypeServices = Utilisateur::enumutilisateur();
         $Utilisateur=Utilisateur::find($id);
-        //dd($Services);
         return view('utilisateur.ModifierUtilisateur',['Utilisateur'=>$Utilisateur,'TypeServices'=>$TypeServices]);
     }
 
@@ -121,35 +130,32 @@ class UtilisateurController extends Controller
             }
         else{
             $Utilisateur=Utilisateur::find($id);
+            if($Utilisateur->pseudo==session()->get('pseudo'))
+                {
+                 session()->put('pseudo', $request->pseudo);
+                }
             $Utilisateur->pseudo=$request['pseudo'];
-            //$request->session()->put('password', $request->password);
-            $request->session()->put('pseudo', $request->Pseudo);
-            echo ' 12ddddddddddddddd12 ';
-            dd($request);
-
             $Utilisateur->nom = $request['nom'];
             $Utilisateur->prenom =$request['prenom'];
             $Utilisateur->nomservice =$request['nomservice'];
             $Utilisateur->password= $request['password'];
             $Utilisateur->save();
-            return redirect()->route('utilisateurs')->withSuccess('Utilisateur modifié avec succés');
+            return redirect()->route('utilisateurs')->withSuccess('Utilisateur modifie avec succés');
             }
     }
     
     public function updateActivate(Request $request, $id)
     {   
         $Utilisateur=Utilisateur::find($id);
-        if ($Utilisateur->activation) {
-            echo $Utilisateur->activation;
+        if ($Utilisateur->activation ==1) {
             $Utilisateur->activation= 0;
             $Utilisateur->save();
-            return redirect()->route('utilisateurs')->withSuccess('Cet utilisateur est active avec succes.');
+            return redirect()->route('utilisateurs')->withSuccess('Cet utilisateur est désactivé avec succes.');
 
         }else {
-        echo $Utilisateur->activation;
-        $Utilisateur->activation= 1;
+            $Utilisateur->activation= 1;
             $Utilisateur->save();
-            return redirect()->route('utilisateurs')->withSuccess('Cet utilisateur est desactive avec succes.');
+            return redirect()->route('utilisateurs')->withSuccess('Cet utilisateur est activé avec succes.');
 
         }
     }
@@ -163,5 +169,4 @@ class UtilisateurController extends Controller
     {
         
     }
-   
 }
