@@ -12,7 +12,7 @@ class ConnexionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function Confirmeconnexion(Request $request)
+    public function SeConnecter(Request $request)
     {    //dd('$request->all()');
         $this->validate($request,[
         'Pseudo' => 'required|string',
@@ -20,17 +20,26 @@ class ConnexionController extends Controller
         ['Pseudo.required' => 'Mot de passe ou pseudo n\'ont pas correctes',
         'password.required' => 'Mot de passe ou pseudo n\'ont pas correctes',
         'password.between' => 'Mot de passe ou pseudo n\'ont pas correctes',]);
-        $utilisateur=Utilisateur::where('pseudo',$request->Pseudo)->where('password',$request->password)->first();
+        $utilisateur=Utilisateur::where([['pseudo',$request->Pseudo],
+                                         ['password',$request->password],
+                                         ['activation',1]
+                                     ])->first();
+       //dd($utilisateur);
         if ($utilisateur) {
             $utilisateur['remember_token']=$request->_token;
             $utilisateur->save();
             //dd($utilisateur->pseudo);
-            $request->session()->put('password', $request->password);
+            $request->session()->put('nomservice', $utilisateur->nomservice);
             $request->session()->put('pseudo', $request->Pseudo);
             //$request->session()->regenerateToken();
             //dd($request->session());
-            return redirect()->route('utilisateurs');
-            //dd($utilisateur->pseudo);
+            if ($utilisateur->nomservice =='DGSI') {
+                return redirect()->route('utilisateurs');
+            }
+            if ($utilisateur->nomservice =='Agent_Service') {
+                return redirect()->route('demandespagenttraitees');
+            }
+            
         }
         else{
            //dd('echec de...'); 
@@ -57,50 +66,5 @@ class ConnexionController extends Controller
         //echo $request->session()->get('pseudo');
         //dd($request->session());
         return redirect()->route('seconnecter');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
