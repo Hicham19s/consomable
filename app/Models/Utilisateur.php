@@ -19,8 +19,24 @@ class Utilisateur extends Model
                             'remember_token'];
 
     public static function enumutilisateur(){
-    	$TypeService = array('SAG','DGSI','Agent_Service');
-    	return $TypeService;
+        $TypeService = array('SAG','DGSI','Agent_Service');
+        return $TypeService;
+    }
+
+    protected static function booted(){
+        static::created(function($utilisateur){
+            $utilisateur->nomservice='SAG';
+            //
+        });
     }
     
+
+    public function demandes()
+    {
+        return $this->hasMany(Demande::class);
+    }
+    public function demandesp()
+    {
+        return $this->hasManyThrough(Demande::class,R_Produit_DemandePrestation::class);
+    }    
 }
