@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\categorie;
 class CategorieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('psession');
+        $this->middleware('DGSI_Session');
+    }
     public function index()
     {
-        $categories = categorie::get();
-        $categories = categorie::paginate(5);
+        $categories = categorie::latest("updated_at")->with('produits')->paginate(5);
+        //$categories = categorie::with('produits')->first();
         return view('categorie.ListeCategories',['categories'=>$categories]);
     }
     
