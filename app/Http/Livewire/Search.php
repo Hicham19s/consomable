@@ -12,21 +12,19 @@ class Search extends Component
     public function render()
     { 
         $queryMatch = '%' . $this->query . '%';
-        
+        $TypeServices = Utilisateur::enumutilisateur();
         if ($queryMatch == '%%') {
-            $Utilisateurs = Utilisateur::paginate(5);
-            // $Utilisateurs = Utilisateur:: where('pseudo', 'like',$queryMatch)->pagination(4);
-            //$this->Utilisateurs = Utilisateur::all();
-            return view('livewire.search',[
+            $Utilisateurs = Utilisateur::latest("updated_at")->paginate(5);
+            return view('livewire.search',['TypeServices'=>$TypeServices,
                 'Utilisateurs' =>$Utilisateurs ]);
             # code...
         }else{
 
-            $Utilisateurs = Utilisateur:: where('pseudo', 'like',$queryMatch)->paginate(5);
-            // $Utilisateurs = Utilisateur:: where('pseudo', 'like',$queryMatch)->pagination(4);
-            //$this->Utilisateurs = Utilisateur::all();
-            return view('livewire.search',[
-                'Utilisateurs' =>$Utilisateurs ]);
+            $Utilisateurs = Utilisateur:: where('pseudo', 'like',$queryMatch)
+                                        ->orWhere('nom', 'like',$queryMatch)
+                                        ->orWhere('prenom', 'like',$queryMatch)
+                                        ->orWhere('nomservice', 'like',$queryMatch)->latest()->paginate(5);
+            return view('livewire.search',['TypeServices'=>$TypeServices,'Utilisateurs' =>$Utilisateurs ]);
         }
               
             }
