@@ -63,5 +63,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'psession' => \App\Http\Middleware\Pasdesession::class,
+        'DGSI_Session' => \App\Http\Middleware\DGSI_Middleware::class,
+        'Agent_Service_Session' => \App\Http\Middleware\Agent_Service_middleware::class,
     ];
 }
