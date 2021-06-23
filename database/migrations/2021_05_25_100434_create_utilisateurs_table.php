@@ -15,12 +15,12 @@ class CreateUtilisateursTable extends Migration
     {
         Schema::create('utilisateurs', function (Blueprint $table) {
             $table->id();
-            $table->string('pseudo')->unique()->nullable();
+            $table->string('pseudo')->unique();
             $table->string('nom');
             $table->string('prenom');
             $table->enum('nomservice',['SAG','DGSI','Agent_Service'])->default('Agent_Service');
             $table->string('password');
-            $table->boolean('activation')->default('true');
+            $table->boolean('activation')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
