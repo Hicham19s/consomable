@@ -6,6 +6,48 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+ .fontsize1{
+  font-size: 1.2rem;
+  color:#080808;
+
+ }
+ .dot {
+  height: 90px;
+  width: 140px;
+  padding-top : 5px;
+  background-color: #7dbaec;
+  border-radius: 50%;
+  display: inline-block;
+  color:rgb(242 250 252);
+  font-weight: bolder;
+  font-family: "Nunito", sans-serif;
+
+}
+.dotactif{  
+  height: 85px;
+  width: 120px;
+  padding-top : 20px;
+  font-size: 1.8rem;
+  background-color: #38c172;
+  border-radius: 50%;
+  display: inline-block;
+  color:rgb(242 250 252);
+  font-weight: bolder;
+  font-family: "Nunito", sans-serif;
+}
+  .dotdesactif{  
+    height: 90px;
+  width: 125px;
+  padding-top : 20px;
+    font-size: 1.8rem;
+    background-color: #e3342f;
+    border-radius: 50%;
+    display: inline-block;
+    color:rgb(242 250 252);
+  font-weight: bolder;
+  font-family: "Nunito", sans-serif;
+}
 :root {
   --blue: #3490dc;
   --indigo: #6574cd;
