@@ -10,7 +10,9 @@ class Produit extends Model
     use HasFactory;
         protected $fillable=['id',
                             'designation',
-                            'qtestock',];
+                            'qtestock',
+                            'qtemin',
+                            'categorie_id',];
     public function demande()
     {
         return $this->hasOne(R_Produit_DemandePrestation::class);
