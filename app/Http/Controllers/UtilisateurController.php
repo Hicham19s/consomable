@@ -51,9 +51,31 @@ class UtilisateurController extends Controller
      */
     public function store(Request $request)
     {   
-        //$this->validate($request , ['pseudo'=>'required|max:20',]);
-        //dd($request);      
-        $request->validate([
+        // $this->validate($request , ['pseudo'=>'required|max:20',]);
+        // dd($request);      
+        // $request->validate([
+        // 'pseudo' => 'bail|required|unique:utilisateurs',
+        // 'nom' => 'bail|required|string|max:20|alpha',
+        // 'prenom' => 'bail|required|string|max:20|alpha',
+        // 'password' => 'bail|required|string|confirmed|between:8,12',],
+        // ['pseudo.unique' => 'ce pseudo est déjà utiliser',
+        // 'pseudo.required' => 'Le champ du pseudo est obligatoire',
+        // 'nom.required' => 'Le nom est obligatoire',
+        // 'nom.alpha' => 'Seulement l\'alphabet est autorisé',
+        // 'prenom.alpha' => 'Seulement l\'alphabet est autorisé',
+        // 'password.required' => 'Le mot de passe est obligatoire',
+        // 'password.between' => 'Mot de passe entre 8 et 12 caractères',
+        // 'password.confirmed' => 'Le mot de passe n\'est pas confirmé',]);  
+
+        // Utilisateur::create(['pseudo' => $request['pseudo'],
+        //                     'nom' => $request['nom'],
+        //                     'prenom' => $request['prenom'],
+        //                     'nomservice' => $request['nomservice'],
+        //                     'password' => $request['password'],]);
+        // return redirect()->route('utilisateurs')->withSuccess('Utilisateur créé avec succés');
+    //    //Return redirect::back()->route('utilisateurs')->withSuccess('Utilisateur créé avec succés');
+ 
+       $validator = \Validator::make($request->all(), [
         'pseudo' => 'bail|required|unique:utilisateurs',
         'nom' => 'bail|required|string|max:20|alpha',
         'prenom' => 'bail|required|string|max:20|alpha',
@@ -65,16 +87,23 @@ class UtilisateurController extends Controller
         'prenom.alpha' => 'Seulement l\'alphabet est autorisé',
         'password.required' => 'Le mot de passe est obligatoire',
         'password.between' => 'Mot de passe entre 8 et 12 caractères',
-        'password.confirmed' => 'Le mot de passe n\'est pas confirmé',]);  
-
-        Utilisateur::create(['pseudo' => $request['pseudo'],
-                            'nom' => $request['nom'],
-                            'prenom' => $request['prenom'],
-                            'nomservice' => $request['nomservice'],
-                            'password' => $request['password'],]);
-        return redirect()->route('utilisateurs')->withSuccess('Utilisateur créé avec succés');
-       // Return redirect::back()->route('utilisateurs')->withSuccess('Utilisateur créé avec succés');
+        'password.confirmed' => 'Le mot de passe n\'est pas confirmé',
+    ]);
+    
+    if ($validator->fails())
+    {
+        return response()->json(['errors'=>$validator->errors()->all()]);
     }
+
+    $input = $request->all();
+    
+    Utilisateur::create($input);
+    return response()->json(['success'=>'Utilisateur saved successfully.']);
+    // return redirect()->route('utilisateurs')->withSuccess('Utilisateur créé avec succés');
+}
+
+
+    
 
     /**
      * Display the specified resource.
@@ -144,21 +173,7 @@ class UtilisateurController extends Controller
             }
     }
     
-    public function updateActivate(Request $request, $id)
-    {   
-        $Utilisateur=Utilisateur::find($id);
-        if ($Utilisateur->activation ==1) {
-            $Utilisateur->activation= 0;
-            $Utilisateur->save();
-            return redirect()->route('utilisateurs')->withSuccess('Cet utilisateur est désactivé avec succes.');
-
-        }else {
-            $Utilisateur->activation= 1;
-            $Utilisateur->save();
-            return redirect()->route('utilisateurs')->withSuccess('Cet utilisateur est activé avec succes.');
-
-        }
-    }
+  
     /**
      * Remove the specified resource from storage.
      *
