@@ -13,38 +13,37 @@ class CategorieController extends Controller
     }
     public function index()
     {
+        $NbrCategories = categorie::count();
         $categories = categorie::latest("updated_at")->with('produits')->paginate(5);
         //$categories = categorie::with('produits')->first();
-        return view('categorie.ListeCategories',['categories'=>$categories]);
+        return view('categorie.ListeCategories',['categories'=>$categories,'NbrCategories'=>$NbrCategories]);
     }
-    
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $this->validate($request , ['designation'=>'required|max:20',]);
-        if (categorie::where('designation',$request['designation'])->first() ) {
-            return back()->withSuccess('Cette categorie existe déja');
-            }
-        else{
-        categorie::create(['designation' => $request['designation'],]);
-        return redirect()->route('categories')->withSuccess('Categorie créée avec succés');
-            }
+        // $this->validate($request , ['designation'=>'required|max:20',]);
+        // if (categorie::where('designation',$request['designation'])->first() ) {
+        //     return back()->withSuccess('Cette categorie existe déja');
+        //     }
+        // else{
+        // categorie::create(['designation' => $request['designation'],]);
+        // return redirect()->route('categories')->withSuccess('Categorie créée avec succés');
+        //     }
+        $validator = \Validator::make($request->all(), [
+            'designation' => 'bail|required|unique:categories',],
+            ['designation.unique' => 'cette designation est déjà utiliser',
+            'designation.required' => 'Le champ du designation est obligatoire',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+    
+        $input = $request->all();
+        
+        categorie::create($input);
+        
+        return response()->json(['success'=>'categorie saved successfully.']); 
     }
 
     /**
@@ -100,6 +99,7 @@ class CategorieController extends Controller
      */
     public function destroy($id)
     {
+      
         categorie::destroy($id);
         return redirect()->route('categories')->withSuccess('Categorie supprimée avec succés');
     }
