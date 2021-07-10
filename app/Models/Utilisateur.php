@@ -35,8 +35,12 @@ class Utilisateur extends Model
     {
         return $this->hasMany(Demande::class);
     }
-    public function demandesp()
+    // public function demandesp()
+    // {
+    //     return $this->hasManyThrough(Demande::class,R_Produit_DemandePrestation::class);
+    // } 
+    public function demandeslivraison()
     {
-        return $this->hasManyThrough(Demande::class,R_Produit_DemandePrestation::class);
-    }    
+        return $this->hasMany(DemandeLivraison::class);
+    }   
 }
