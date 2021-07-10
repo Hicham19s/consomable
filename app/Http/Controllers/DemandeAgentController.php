@@ -33,7 +33,7 @@ class DemandeAgentController extends Controller
 
      public function DemandeNonTraitees()
     {
-        $Demandeseffectuees = Demande::where('etat_traitement','')->with('Produit_DemandePrestation')->
+        $Demandeseffectuees = Demande::where('etat_traitement','NonTraitée')->with('Produit_DemandePrestation')->
         whereHas('utilisateur',function($q){$q->where('pseudo','LIKE','%'.session()->get('pseudo').'%');})->get();
                    //dd($Demandesacceptees);
         $Demandesenattente = Demande::where('etat_traitement','en_attente')->with('Produit_DemandePrestation')->
@@ -42,5 +42,34 @@ class DemandeAgentController extends Controller
         return view('demandeAgent.ListeDemandesNonTraiteesAgent',[
             'Demandeseffectuees'=>$Demandeseffectuees,'Demandesenattente'=>$Demandesenattente]);
     }
+     public function EffectuerDemande()
+    {
+        return view('demandeAgent.EffectuerDemandeAgent');
+    }
+     public function AjouterProduitAuDemande(Request $request, $id)
+    {   
+        //dd($request);
+        R_Produit_DemandePrestation::create(['qtedemandee' => $request['QteDemandee'],
+                                                'produit_id' => $request['ProduitId'],
+                                                'demande_id' => $id,
+                                                ]);
+        
+        return view('demandeAgent.EffectuerDemandeAgent');
+    }
+
+
+    public function SupprimerProduitDemande(Request $request, $id)
+    {   
+        R_Produit_DemandePrestation::destroy($id);
+        return view('demandeAgent.EffectuerDemandeAgent');
+    }
     
+    public function EffectuerValidationDemande(Request $request, $id)
+    {
+
+        $Demande=Demande::find($id);
+        $Demande->etat_traitement='NonTraitée';
+        $Demande->save();
+        return redirect()->route('demandespagentnontraitees')->withSuccess('La demande est validée avec succés');
+    }
 }
