@@ -30,14 +30,18 @@ class ConnexionController extends Controller
             $utilisateur->save();
             //dd($utilisateur->pseudo);
             $request->session()->put('nomservice', $utilisateur->nomservice);
-            $request->session()->put('pseudo', $request->Pseudo);
+            $request->session()->put('pseudo', $utilisateur->pseudo);
+            $request->session()->put('id', $utilisateur->id);
             //$request->session()->regenerateToken();
             //dd($request->session());
             if ($utilisateur->nomservice =='DGSI') {
                 return redirect()->route('utilisateurs');
             }
             if ($utilisateur->nomservice =='Agent_Service') {
-                return redirect()->route('demandespagenttraitees');
+                return redirect()->route('effectuerdemandesagent');
+            }
+            if ($utilisateur->nomservice =='SAG') {
+                return redirect()->route('demandeslivraisonssag');
             }
             
         }
