@@ -10,11 +10,13 @@ class R_Produit_DemandePrestation extends Model
     use HasFactory;
     protected $fillable=['id',
                         'qtedemandee',
-                        'qteprise',];
+                        'qteprise',
+                        'produit_id',
+                        'demande_id',];
 
     public function produits()
     {
-        return $this->belongsTo(Produit::class,'id')->withDefault();
+        return $this->belongsTo(Produit::class,'produit_id')->withDefault();
     }
     public function demandes()
     {
