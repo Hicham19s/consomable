@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'psession' => \App\Http\Middleware\Pasdesession::class,
         'DGSI_Session' => \App\Http\Middleware\DGSI_Middleware::class,
         'Agent_Service_Session' => \App\Http\Middleware\Agent_Service_middleware::class,
+        'SAG_Session' => \App\Http\Middleware\SAG_Session_Middleware::class,
     ];
 }
