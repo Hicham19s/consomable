@@ -23,7 +23,8 @@ class DemandeFactory extends Factory
     public function definition()
     {
         return [
-                'etat_traitement'=>$this->faker->randomElement($array = array('','acceptée','validée','refusée','en_attente')),
+                // 'etat_traitement'=>$this->faker->randomElement($array = array('','acceptée','validée','refusée','en_attente')),
+                'etat_traitement'=>'NonTraitée',
                 'utilisateur_id' =>Utilisateur::factory(),
         ];
     }
