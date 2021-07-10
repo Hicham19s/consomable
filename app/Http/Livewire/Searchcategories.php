@@ -9,7 +9,9 @@ class SearchCategories extends Component
 {
        public  $query  ;
     use WithPagination;
-    
+        
+ 
+  
     public function render()
     { 
         $queryMatch = '%' . $this->query . '%';
