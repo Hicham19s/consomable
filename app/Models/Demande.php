@@ -9,11 +9,12 @@ class Demande extends Model
 {
     use HasFactory;
     protected $fillable=['id',
-                        'etat_traitement',];
+                        'etat_traitement',
+                        'utilisateur_id',];
 
     protected static function booted(){
         static::created(function($demande){
-            $demande->etat_traitement='en_attente';
+            $demande->etat_traitement='';
             //
         });
     }
