@@ -5,7 +5,6 @@
             <th scope="col">id</th>
             <th scope="col">date de demande </th>
             <th scope="col">table des produits</th>
-            <th scope="col" >Action</th> 
         </thead>
                 <tbody class="text-capitalize">
                 @foreach($Demandesacceptees as $Demande)
@@ -14,7 +13,7 @@
                         <th scope="row" class="font-weight-bold align-middle">{{$Demande->id}}</th>
                         <td class=" align-middle">{{$Demande->created_at}}</td>
                         <td >
-                        <table class="table table-sm"> 
+                        <table class="table table-sm table-bordered"> 
                             @if($Demande->Produit_DemandePrestation->count())
                                 <tr>
                                 <th scope="col">désignation produit</th>
@@ -34,19 +33,6 @@
                                 @endif
                         </table >
                         </td class=" align-middle">
-                        <td class="d-flex ">
-                            <form action="{{route('demandeupdateactiver',$Demande->id)}}" method="POST" class="mr-auto pr-1">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-success">Accepter</button>
-                            </form>
-                        
-                            <form action="{{route('demandeupdaterefuser',$Demande->id)}}" method="POST" class="mr-auto">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-danger ">Refuser</button>
-                            </form>
-                        </td>
                     </tr>
                 @endif
                 @endforeach

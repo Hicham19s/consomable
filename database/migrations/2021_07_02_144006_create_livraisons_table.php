@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDemandesTable extends Migration
+class CreateLivraisonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateDemandesTable extends Migration
      */
     public function up()
     {
-        Schema::create('demandes', function (Blueprint $table) {
+        Schema::create('demande_livraisons', function (Blueprint $table) {
             $table->id();
-            $table->enum('etat_traitement',['','NonTraitée','acceptée','validée','refusée','en_attente','abandonnée'])->default('');
+            $table->enum('traitement_livraison',['','NonTraitée','Recue','Traitée'])->default('');
             $table->foreignId('utilisateur_id')->constrained('utilisateurs')->onUpdate('CASCADE')->onDelete('RESTRICT');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateDemandesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('demandes');
+        Schema::dropIfExists('demande_livraisons');
     }
 }

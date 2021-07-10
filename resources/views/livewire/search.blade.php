@@ -1,8 +1,11 @@
+<section>
+
 <div class="container">
     <div class="row pt-2 " style="margin-right: -150px">
         <div class="col-md-10 mx-auto">
         <input type="text" wire:model="query" placeholder="Rechercher par pseudo, nom, prenom..." class="form-control" />
         </div>
+
     <div class=" pt-2 col-md-12 mx-auto ">
      @if($Utilisateurs->count())
         <table  class="table table-striped  table-responsive{-sm|-md|-lg|-xl} text-center ">
@@ -17,7 +20,6 @@
                 <th scope="col">  Action</th> </thead>
                 <tbody class="text-capitalize ">
                 @foreach($Utilisateurs as $utilisateur)
-               
                         <tr>
                             <th name="id">{{$utilisateur->id}}</th>
                             <td>{{$utilisateur->pseudo}}</td>
@@ -158,12 +160,11 @@
 
                 </tbody>
         </table>
-        @if(!$query)
         <div class="d-flex justify-content-center">{{$Utilisateurs->links('pagination::bootstrap-4')}} </div>
-        @endif
      @else
      <div class="alert alert-success alert-dismissible">Aucun utilisateur trouvé.</div>
      @endif
     </div>
 </div>
 </div>
+</section>

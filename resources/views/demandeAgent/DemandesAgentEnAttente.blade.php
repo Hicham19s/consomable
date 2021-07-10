@@ -13,8 +13,8 @@
                     <tr>
                         <th scope="row" class="font-weight-bold align-middle">{{$Demande->id}}</th>
                         <td class=" align-middle">{{$Demande->created_at}}</td>
-                        <td >
-                        <table class="table table-sm"> 
+                        <td class=" align-middle">
+                        <table class="table table-sm table-bordered"> 
                             @if($Demande->Produit_DemandePrestation->count())
                                 <tr>
                                 <th scope="col">désignation produit</th>
@@ -33,18 +33,12 @@
                                 @endforeach
                                 @endif
                         </table >
-                        </td class=" align-middle">
-                        <td class="d-flex ">
-                            <form action="{{route('demandeupdateactiver',$Demande->id)}}" method="POST" class="mr-auto pr-1">
+                        </td >
+                        <td class="align-middle">
+                            <form action="{{route('demandeupdateabandonner',$Demande->id)}}" method="POST" class="mr-auto pr-1">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="btn btn-success">Accepter</button>
-                            </form>
-                        
-                            <form action="{{route('demandeupdaterefuser',$Demande->id)}}" method="POST" class="mr-auto">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-danger ">Refuser</button>
+                                <button type="submit" class="btn btn-danger">Abondonner</button>
                             </form>
                         </td>
                     </tr>

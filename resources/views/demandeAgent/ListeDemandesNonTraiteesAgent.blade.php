@@ -2,8 +2,8 @@
 @extends('layouts.app')
 @section('content')
 <body>
-<div class="container-fluid ">
-  <div  class="row flex-xl-nowrap mx-auto pt-1 pb-1">
+<div class="container-fluid mt-5">
+  <div  class="row flex-xl-nowrap mx-auto pt-2 pb-1">
 
     <div class="col-md-3 col-xl-3 bd-sidebar" style="background-color:#d6d8db;">
         <div class="container">

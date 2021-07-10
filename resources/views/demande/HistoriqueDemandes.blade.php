@@ -20,7 +20,7 @@
                         <td class=" align-middle">{{$Demande->utilisateur->pseudo}}</td>
                         <td class=" align-middle">{{$Demande->created_at}}</td>
                         <td >
-                        <table class="table table-sm"> 
+                        <table class="table table-sm table-bordered"> 
                             @if($Demande->Produit_DemandePrestation->count())
                                 <tr>
                                 <th scope="col">désignation produit</th>
@@ -48,7 +48,7 @@
                            
 
                     </table>
-<div class="d-flex justify-content-center">{{$ToutesDemandes->links('pagination::bootstrap-4')}} </div>
+<div class="d-flex justify-content-center">{{$ToutesDemandes->links('pagination::default')}} </div>
 
               @else
                 <div class="alert alert-success alert-dismissible">Aucune demande à afficher...</div>  

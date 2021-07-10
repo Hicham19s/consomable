@@ -21,20 +21,20 @@
               </button>
           </div>
           <div class="modal-body row">
-                 <form  method="post" >
+                      <div>
+                        <span class="col-5" style="color: red" id="errorform"  role="alert">
+                        </span>
+                      </div>
+                 <form action="/utilisateurs" method="post" id="submitForm" >
                         @csrf
-                       
+                        @method('POST')
 	                        <div class="form-group row">
 	                            <label for="pseudo" class="col-md-4 col-form-label text-md-right">pseudo :</label>
 
 	                            <div class="col-md-6">
 	                                <input id="pseudo" type="text" class="form-control @error('pseudo') is-invalid @enderror" name="pseudo" value="{{ old('pseudo') }}" required autocomplete="pseudo">
-
-	                                @error('pseudo')
-	                                    <span class="invalid-feedback" role="alert">
-	                                        <strong>{{ $message }}</strong>
-	                                    </span>
-	                                @enderror
+	                                    <!-- <span id="errorform"  role="alert">
+	                                    </span> -->
 	                            </div>
 	                        </div>
 	                        <div class="form-group row">
@@ -43,11 +43,10 @@
 	                            <div class="col-md-6">
 	                                <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror" name="nom" value="{{ old('nom') }}" required autocomplete="nom">
 
-	                                @error('nom')
-	                                    <span class="invalid-feedback" role="alert">
-	                                        <strong>{{ $message }}</strong>
-	                                    </span>
-	                                @enderror
+	                               
+	                                    <!-- <span id="errorform1"  role="alert">
+	                                    </span> -->
+	                               
 	                            </div>
 	                        </div>
 	                        <div class="form-group row">
@@ -56,11 +55,9 @@
 	                            <div class="col-md-6">
 	                                <input id="prenom" type="text" class="form-control @error('prenom') is-invalid @enderror" name="prenom" value="{{ old('prenom') }}" required autocomplete="prenom">
 
-	                                @error('prenom')
-	                                    <span class="invalid-feedback" role="alert">
-	                                        <strong>{{ $message }}</strong>
-	                                    </span>
-	                                @enderror
+	                                    <!-- <span id="errorform2"  role="alert">
+	                                    </span> -->
+	                              
 	                            </div>
 	                        </div>
 	                        <div class="form- row ">
@@ -83,11 +80,8 @@
 	                            <div class="col-md-6">
 	                                <input id="password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-	                                @error('password')
-	                                    <span class="invalid-feedback" role="alert">
-	                                        <strong>{{ $message }}</strong>
-	                                    </span>
-	                                @enderror
+	                                    <!-- <span id="errorform3"  role="alert">
+	                                    </span> -->
 	                            </div>
 	                        </div>
 
@@ -101,7 +95,7 @@
 
 	                        <div class="form-group row mb-0 ">
 	                            <div class="col-md-6 offset-md-4">
-	                                <button type="submit" class="btn btn-primary">
+	                                <button type="submit" id="savebtn" class="btn btn-primary">
 	                                    Enregistrer
 	                                </button>
 	                                <a class="btn btn-primary" href="{{route('utilisateurs')}}" role="button">Annuler</a>
@@ -126,7 +120,7 @@
         </div>
         <div  class=" p-2">
          
-        <h1><span class="dotdesactif">{{$nbrutilisateursdesactifs}} <div class="fontsize1">desactif</div></span>
+        <h1><span class="dotdesactif">{{$nbrutilisateursdesactifs}} <div class="fontsize1">anactif</div></span>
         </h1>
         </div>
     </div>            
@@ -152,85 +146,43 @@
  @livewireScripts
  </div>
 </div>
-<script>
-  function openModal() {
-            $('#formulaire').modal('show')
-        }
-		
-		function storeData() {
-           var CSRF_TOKEN =$('meta[name="csrf-token"]').attr('content');
-		   var pseudo =$('#pseudo').val();
-		   var nom =$('#nom').val();
-		   var prenom =$('#prenom').val();
-		   var nomservice =$('#nomservice').val();
-		   var password =$('#password').val();
-		   $.ajax({
-			   type 'Post',
-			   Url:'/utilisateurs',
-			   data :{
-				_token: CSRF_TOKEN,
-				pseudo:pseudo,
-				nom:nom,
-				prenom:prenom,
-				nomservice:nomservice,
-				password:password,
-			   }
-			   success: function (data) {
-              
-                },
-				error: function (data) {
-                    var errors = data.responseJSON;
-                    if($.isEmptyObject(errors) == false) {
-                        $.each(errors.errors,function (key, value) {
-                            var ErrorID = '#' + key +'Error';
-                            $(ErrorID).removeClass("d-none");
-                            $(ErrorID).text(value)
-                        })}}
-		   })
-        }
-		
-// </script>
-// <!-- <script type="text/javascript">
-//     $('body').on('click', '#submitForm', function(){
-//         var registerForm = $("#Register");
-//         var formData = registerForm.serialize();
-//         $( '#pseudo-error' ).html( "" );
-//         $( '#nom-error' ).html( "" );
-//         $( '#prenom-error' ).html( "" );
-//         $( '#password-error' ).html( "" );
 
-//         $.ajax({
-//             url:'/register',
-//             type:'POST',
-//             data:formData,
-//             success:function(data) {
-//                 console.log(data);
-//                 if(data.errors) {
-//                     if(data.errors.pseudo){
-//                         $( '#pseudo-error' ).html( data.errors.pseudo[0] );
-//                     }
-//                     if(data.errors.email){
-//                         $( '#nom-error' ).html( data.errors.nom[0] );
-//                     }
-// 					if(data.errors.email){
-//                         $( '#prenom-error' ).html( data.errors.prenom[0] );
-//                     }
-//                     if(data.errors.password){
-//                         $( '#password-error' ).html( data.errors.password[0] );
-//                     }
+<script type="text/javascript">
+
+    $(document).on('click', '#savebtn', function(ev){
+		ev.preventDefault();
+        var registerForm = $("#submitForm");
+        var formData = registerForm.serialize();
+        $.ajax({
+            url:'/utilisateurs',
+            type:'POST',
+            data:formData,
+            success:function(su) {
+                console.log(JSON.stringify(su));
+                if(su.success ) {
+                    $('#formulaire .close').click();
+                }else{
+					
+                    if(su.errors[0]){
+                        $( '#errorform' ).html( "<strong>"+ su.errors[0] +"</strong>");
+                    }
+                    if(su.errors[1]){
+                        $( '#errorform' ).html( "<strong>"+ su.errors[1] +"</strong>");
+                    }
+					if(su.errors[2]){
+                        $( '#errorform' ).html( "<strong>"+su.errors[2] +"</strong>" );
+                    }
+                    if(su.errors[3]){
+                        $( '#errorform' ).html("<strong>"+ su.errors[3] +"</strong>" );
+                    }
                     
-//                 }
-//                 if(data.success) {
-//                     $('#success-msg').removeClass('hide');
-//                     setInterval(function(){ 
-//                         $('#formulaire').modal('hide');
-//                         $('#success-msg').addClass('hide');
-//                     }, 3000);
-//                 }
-//             },
-//         });
-//     });
-// </script> -->
+                }
+            },
+        });
+    });
+	
+
+</script>
 
 </body>
 

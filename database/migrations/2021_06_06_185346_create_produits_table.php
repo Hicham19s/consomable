@@ -15,8 +15,9 @@ class CreateProduitsTable extends Migration
     {
         Schema::create('produits', function (Blueprint $table) {
             $table->id();
-            $table->String('designation')->unique();
-            $table->UnsignedSmallInteger('qtestock');
+            $table->String('designation',20)->unique();
+            $table->UnsignedSmallInteger('qtestock')->default('0');
+            $table->UnsignedSmallInteger('qtemin')->default('0');
             $table->foreignId('categorie_id')->constrained('categories')->onUpdate('CASCADE')->onDelete('RESTRICT');
             $table->timestamps();
         });

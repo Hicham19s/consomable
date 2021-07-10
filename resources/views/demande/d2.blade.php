@@ -14,7 +14,7 @@
                         <th scope="row" class="font-weight-bold align-middle">{{$Demande->utilisateur->pseudo}}{{$Demande->id}}</th>
                         <td class=" align-middle">{{$Demande->created_at}}</td>
                         <td class=" align-middle">
-                            <table class="table table-sm"> 
+                            <table class="table table-sm table-bordered"> 
                                 @if($Demande->Produit_DemandePrestation->count())
                                     <tr>
                                     <th scope="col">désignation produit</th>
@@ -53,7 +53,7 @@
                                                             </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form action="/qteprisemodi/{{$produit_quantitee->produit_id}}" method="post" >
+                                                        <form action="/qteprisemodi/{{$produit_quantitee->id}}" method="post" >
                                                             @csrf
                                                             @method('PUT')
                                                                 <label for="qteprise" class="col-md-4 col-form-label text-md-right">qteprise :</label>
@@ -113,9 +113,9 @@
                     @endif
                 @endforeach
 
-                                                        </tbody>
+    </tbody>
 
-                                            </table>
+</table>
 @else
 <div class="alert alert-success alert-dismissible">Aucune demande à valider...</div>  
 @endif

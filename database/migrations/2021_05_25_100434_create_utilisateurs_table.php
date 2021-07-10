@@ -15,7 +15,7 @@ class CreateUtilisateursTable extends Migration
     {
         Schema::create('utilisateurs', function (Blueprint $table) {
             $table->id();
-            $table->string('pseudo')->unique();
+            $table->string('pseudo',20)->unique();
             $table->string('nom');
             $table->string('prenom');
             $table->enum('nomservice',['SAG','DGSI','Agent_Service'])->default('Agent_Service');

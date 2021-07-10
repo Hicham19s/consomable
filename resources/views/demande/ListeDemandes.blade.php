@@ -2,8 +2,9 @@
 @extends('layouts.app')
 @section('content')
 <body>
-<div class="container-fluid ">
-  <div  class="row flex-xl-nowrap mx-auto pt-1 pb-1">
+  {{$ViewDemendeId}}
+<div class="container-fluid mt-5">
+  <div  class="row flex-xl-nowrap mx-auto pt-2 pb-1">
 
     <div class="col-md-3 col-xl-3 bd-sidebar" style="background-color:#d6d8db;">
         <div class="container">
@@ -25,37 +26,55 @@
                             </div>
                           @endif
                       </div>
+                          
+     
+
   <ul class="nav nav-tabs" role="tablist">
+    
     <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#DemandesnontraiteesID">Demandes non traitees</a>
+      <a class="nav-link @if($ViewDemendeId==1)
+                          active
+                         @endif" data-toggle="tab" href="#DemandesnontraiteesID">Demandes non traitees</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#DemandesenattentedevalidationID">Demandes en attente de  validation</a>
+      <a class="nav-link @if($ViewDemendeId==2)
+                          active
+                         @endif " data-toggle="tab" href="#DemandesenattentedevalidationID">Demandes en attente de  validation</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#DemandeenattenteID">Demande en attente</a>
+      <a class="nav-link @if($ViewDemendeId==3)
+                          active
+                         @endif" data-toggle="tab" href="#DemandeenattenteID">Demande en attente</a>
     </li>
   </ul>
  
-    <div class="tab-content">
-        <div id="DemandesnontraiteesID" class="container tab-pane  active " 
+    <div class="tab-content">  
+
+        <div id="DemandesnontraiteesID" class="container tab-pane  @if($ViewDemendeId==1)
+                                                                    active
+                                                                   @else
+                                                                    fade
+                                                                   @endif " 
         style="height: 347px;width: 768px;overflow-y: auto;"><br>
         @include('demande.d1', ['Demandesnontraitees' => $Demandesnontraitees])
-
         </div>
 
-
-        <div id="DemandesenattentedevalidationID" class="container tab-pane fade "
+        <div id="DemandesenattentedevalidationID" class="container tab-pane  @if($ViewDemendeId==2)
+                                                                              active
+                                                                             @else
+                                                                              fade
+                                                                             @endif "
         style="height: 347px;width: 768px;overflow-y: auto;"><br>
         @include('demande.d2', ['Demandesenattentedevalidation' => $Demandesenattentedevalidation])
-
         </div>
 
-
-       <div id="DemandeenattenteID" class="container tab-pane fade"
+       <div id="DemandeenattenteID" class="container tab-pane   @if($ViewDemendeId==3)
+                                                                active
+                                                               @else
+                                                                fade
+                                                               @endif"
        style="height: 347px;width: 768px;overflow-y: auto;"><br>
        @include('demande.d3', ['Demandeenattente' => $Demandeenattente])
-
         </div> 
        
     </div>

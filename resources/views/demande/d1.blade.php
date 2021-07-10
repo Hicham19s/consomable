@@ -14,7 +14,7 @@
                         <th scope="row" class="font-weight-bold align-middle">{{$Demande->utilisateur->pseudo}}</th>
                         <td class=" align-middle">{{$Demande->created_at}}</td>
                         <td >
-                        <table class="table table-sm"> 
+                        <table class="table table-sm table-bordered"> 
                             @if($Demande->Produit_DemandePrestation->count())
                                 <tr>
                                 <th scope="col">désignation produit</th>
