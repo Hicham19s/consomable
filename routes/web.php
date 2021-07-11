@@ -41,6 +41,7 @@ Route::post('/utilisateurs',[UtilisateurController :: class ,'store'])->name('ut
 Route::get('/utilisateurs/{id}/edit',[UtilisateurController :: class ,'edit'])->name('utilisateurShow');
 Route::put('/utilisateurs/{id}',[UtilisateurController :: class ,'update'])->name('utilisateurupdate');
 Route::put('/utilisateursact/{id}',[UtilisateurController :: class ,'updateActivate'])->name('utilisateurupdateactivate');
+Route::put('/modifierpassword/{id}',[UtilisateurController :: class ,'ModifierMotDePasse']);
 
 Route::get('/demandes',[DemandeController :: class ,'index'])->name('demandesp');
 Route::get('/demandesHistorique',[DemandeController :: class ,'indexAll'])->name('demandespToutes');

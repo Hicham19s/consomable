@@ -7,11 +7,13 @@
 
       <div class="col-md-3 col-xl-3 bd-sidebar" style="background-color:#d6d8db;">
           <div class="container">
-                <ul>
-                <li><a href="">dd</a></li>
-                <li><a href="">fff</a></li>
-                <li><a href="">ttt</a></li>
-                </ul>  
+          <ul>
+            <li><a class="btn btn-link" href="{{route('demandespagentnontraitees')}}">Demandes effectuées</a></li>
+            <li><a class="btn btn-link" href="{{route('demandespagenttraitees')}}">Demandes acceptées</a></li>
+            <li><a class="btn btn-link" href="{{route('demandespagenttraitees')}}">Demandes refusées</a></li>
+            <li><a class="btn btn-link" href="{{route('demandespagentnontraitees')}}">Demandes en attente</a></li>
+            <li><a class="btn btn-link" data-toggle="modal"  data-target="#VoirMonProfil">Voir mon profil1</a></li>
+            </ul>  
           </div>
       </div>
   <div class="p-1 col-md-11 col-xl-8 pl-md-1 bd-content ">

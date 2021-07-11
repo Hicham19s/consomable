@@ -14,6 +14,20 @@ class UtilisateurController extends Controller
         $this->middleware('psession');
         $this->middleware('DGSI_Session');
     }
+    public function ModifierMotDePasse(Request $request,$id)
+    {
+        Log::debug('ModifierMotDePasse Utilisateur_id='.$id);
+        //dd($request->modifierpassword);
+
+        $request->validate(['modifierpassword' => 'required|string|between:8,12',],
+                           ['modifierpassword.required' => 'Le mot de passe est obligatoire',
+                            'modifierpassword.between' => 'Mot de passe entre 8 et 12 caractères',
+                            'modifierpassword.confirmed' => 'Le mot de passe n\'est pas confirmé',]);
+        $Utilisateur=Utilisateur::find($id);
+        $Utilisateur->password= $request->modifierpassword;
+        $Utilisateur->save();
+        return redirect()->back()->withSuccess('Le mot de passe est modifié avec succés');
+    }
     public function index(Request $request)
     {   
         //dd($request->session());
@@ -180,6 +194,21 @@ class UtilisateurController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function updateActivate( $id)
+    {   
+        $Utilisateur=Utilisateur::find($id);
+        if ($Utilisateur->activation ==1) {
+            $Utilisateur->activation= 0;
+            $Utilisateur->save();
+            return redirect()->back()->withSuccess('Cet utilisateur est désactivé avec succes.');
+
+        }else {
+            $Utilisateur->activation= 1;
+            $Utilisateur->save();
+            return redirect()->back()->withSuccess('Cet utilisateur est activé avec succes.');
+
+        }
+    }
     public function destroy($id)
     {
         

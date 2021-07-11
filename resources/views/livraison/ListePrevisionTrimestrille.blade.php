@@ -5,11 +5,14 @@
 		<div  class="row flex-xl-nowrap mx-auto pt-2 pb-1">
             <div class="col-md-3 col-xl-3 bd-sidebar" style="background-color:#d6d8db;">
                 <div class="container">
-                    <ul>
-                    <li><a href="">dd</a></li>
-                    <li><a href="">fff</a></li>
-                    <li><a href="">ttt</a></li>
-                    </ul>  
+                <ul>
+                    <li><a class="btn btn-link {{url()->current()==route('categories') ? 'font-weight-bolder' :''}}" href="{{route('categories')}}">Categories</a></li>
+                    <li><a class="btn btn-link {{url()->current()==route('prevision') ? 'font-weight-bolder' :''}}" href="{{route('prevision')}}">Les previsions trimestrielles</a></li>
+                    <li><a class="btn btn-link {{url()->current()==route('demandespToutes') ? 'font-weight-bolder' :''}}" href="{{route('demandespToutes')}}">Historique des demandes de prestations</a></li>
+                    <li><a class="btn btn-link {{url()->current()==route('demandeslivDGSI') ? 'font-weight-bolder' :''}}" href="{{route('demandeslivDGSI')}}">Les demandes de livraisons</a></li>
+                    <li><a class="btn btn-link {{url()->current()==route('utilisateurs') ? 'font-weight-bolder' :''}}" href="{{route('utilisateurs')}}">Utilisateurs</a></li>
+                    <li><a class="btn btn-link" data-toggle="modal"  data-target="#VoirMonProfil">Voir mon profil</a></li>
+                </ul> 
                 </div>
             </div>
 

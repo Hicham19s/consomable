@@ -70,8 +70,8 @@
                                                             <span aria-hidden="true">&times;</span>
                                                             </button>
                                                     </div>
-                                                    <div class="modal-body">
-                                                    <form action="/categories/{{$categorie->id}}" method="post">
+                                                 <div class="modal-body">
+                                                     <form action="/categories/{{$categorie->id}}" method="post">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="form-group row">
@@ -88,13 +88,13 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                                                                        <div class="modal-footer">
+                                                           <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                 <button type="submit" class="btn btn-primary">
                                                                 Enregistrer les modifications
                                                                 </button>
                                                             </div>
-                                                    </form>
+                                                     </form>
                                                     </div>
                                                 
                                                 </div>
